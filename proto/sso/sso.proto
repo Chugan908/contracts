@@ -1,0 +1,43 @@
+// версия protobuf
+syntax = "proto3"; 
+
+// Текущий пакет - указывает пространство имен для сервиса
+package auth; 
+
+// This command defines the path of the package which will contain all the generated code
+option go_package = "grpc-project/ssov1";
+
+// This service is responsible for authorization and authentication
+service Auth {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+
+message RegisterRequest {
+    string email = 1; // Email of the user to register
+    string password = 2; // Password of the user to register
+}
+
+message RegisterResponse {
+    int64 user_id = 1; // User ID of the registred user
+}
+
+message LoginRequest {
+    string email = 1; // Email of the user to login
+    string password = 2; // Password of the user to login
+    int32 app_id = 3; // ID of th app to login to
+}
+
+message LoginResponse {
+    string token = 1; // Auth token of the logged user
+}
+
+message IsAdminRequest {
+    int64 user_id = 1; // User ID to validate
+}
+
+message IsAdminResponse {
+    bool is_admin = 1; // Indicates whether the user is an admin
+}
